@@ -27,14 +27,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/fromCityHighlightTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:visibility="gone"/>
     </LinearLayout>
 
 
@@ -72,14 +74,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/toCityHighlightTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <TextView

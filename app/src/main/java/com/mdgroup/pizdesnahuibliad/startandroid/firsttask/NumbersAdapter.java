@@ -9,20 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
-import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.FromCity;
 
 
 import java.util.ArrayList;
 
 public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberViewHolder> {
 
-
-    private int numberItems;
     private ArrayList<Data> dataArrayList;
 
     // конструктор
-    public NumbersAdapter(int numberOfItems, ArrayList<Data> dataArrayList) {
-        numberItems = numberOfItems;
+    public NumbersAdapter(ArrayList<Data> dataArrayList) {
         this.dataArrayList = dataArrayList;
 
     }
@@ -36,7 +32,7 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutIdForLisItem, viewGroup, false);
         NumberViewHolder viewHolder = new NumberViewHolder(view);
-
+        viewHolder.showLowerLevelList();
 
         return viewHolder;
 
@@ -70,32 +66,28 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
         holder.priceTextView.setText(data.getPrice().toString());
         holder.busIdTextView.setText(data.getBus_id().toString());
         holder.reservationCountTextView.setText(data.getReservation_count().toString());
-
-
-
-
     }
 
     @Override
     public int getItemCount() {
-        return numberItems;
+        return dataArrayList.size();
     }
+
 
     //Класс в котором реализуем что будет входить в холдер, в танном случаи холдер состоит из множества
     // текст вайф
     class NumberViewHolder extends RecyclerView.ViewHolder {
 
         TextView idTextView,
-
                 fromCityTextView,
-                        fromCityIdTextView,
-                        fromCityHighlightTextView,
+                fromCityIdTextView,
+                fromCityHighlightTextView,
                 fromDateTextView,
                 fromTimeTextView,
                 fromInfoTextView,
                 toCityTextView,
-                        toCityIdTextView,
-                        toCityHighlightTextView,
+                toCityIdTextView,
+                toCityHighlightTextView,
                 toDateTextView,
                 toTimeTextView,
                 toInfoTextView,
@@ -104,15 +96,13 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
                 busIdTextView,
                 reservationCountTextView;
 
-
-
         public NumberViewHolder(View itemView) {
             super(itemView);
             idTextView = itemView.findViewById(R.id.idTextView);
 
             fromCityTextView = itemView.findViewById(R.id.fromCityTextView);
-            fromCityIdTextView = itemView.findViewById(R.id. fromCityIdTextView);
-            fromCityHighlightTextView = itemView.findViewById(R.id. fromCityHighlightTextView);
+            fromCityIdTextView = itemView.findViewById(R.id.fromCityIdTextView);
+            fromCityHighlightTextView = itemView.findViewById(R.id.fromCityHighlightTextView);
 
             fromDateTextView = itemView.findViewById(R.id.fromDateTextView);
             fromTimeTextView = itemView.findViewById(R.id.fromTimeTextView);
@@ -129,8 +119,23 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
             priceTextView = itemView.findViewById(R.id.priceTextView);
             busIdTextView = itemView.findViewById(R.id.bus_idTextView);
             reservationCountTextView = itemView.findViewById(R.id.reservationCountTextView);
+        }
 
-
+        public void showLowerLevelList() {
+            fromCityTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fromCityIdTextView.setVisibility(View.VISIBLE);
+                    fromCityHighlightTextView.setVisibility(View.VISIBLE);
+                }
+            });
+            toCityIdTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toCityIdTextView.setVisibility(View.VISIBLE);
+                    toCityHighlightTextView.setVisibility(View.VISIBLE);
+                }
+            });
 
         }
     }

@@ -101,7 +101,7 @@ public class ProgressFragment extends Fragment {
             datalist = response.getDataList();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             numbersList.setLayoutManager(linearLayoutManager);
-            listAdapter = new NumbersAdapter(300, datalist);
+            listAdapter = new NumbersAdapter(datalist);
             numbersList.setAdapter(listAdapter);
             Toast.makeText(getActivity(), "Данные загружены", Toast.LENGTH_SHORT)
                     .show();
