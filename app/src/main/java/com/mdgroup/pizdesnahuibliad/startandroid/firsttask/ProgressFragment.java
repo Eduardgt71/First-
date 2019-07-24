@@ -11,15 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils.JSONParser;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +31,7 @@ public class ProgressFragment extends Fragment {
 
     Button btnFetch, showList;
     FragmentTransaction fTrans;
-    NumbersAdapter numbersAdapter;
+    NumbersAdapter listAdapter;
     RecyclerView numbersList;
     ScrollView scroller;
     Response response;
@@ -78,25 +75,12 @@ public class ProgressFragment extends Fragment {
             }
         });
 
-
-
-        response = new Response();
-        datalist = response.getDataLis();
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        numbersList.setLayoutManager(linearLayoutManager);
-        //Передаем true если знаем зарание размер нашего списка
-
-        numbersAdapter = new NumbersAdapter(300, datalist);
-        numbersList.setAdapter(numbersAdapter);
-
         return view;
     }
 
     public class ProgressTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... path) {
-
             String stringJson;
             try {
                 stringJson = getContent(path[0]);
@@ -105,8 +89,6 @@ public class ProgressFragment extends Fragment {
             }
             JSONParser jsonParser = new JSONParser();
             jsonParser.parse(stringJson);
-
-
             return stringJson;
         }
 
@@ -114,6 +96,14 @@ public class ProgressFragment extends Fragment {
         protected void onPostExecute(String content) {
             contentText = content;
             contentView.setText(content);
+
+            response = JSONParser.parse(content);
+
+            datalist = response.getDataList();
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            numbersList.setLayoutManager(linearLayoutManager);
+            listAdapter = new NumbersAdapter(300, datalist);
+            numbersList.setAdapter(listAdapter);
             Toast.makeText(getActivity(), "Данные загружены", Toast.LENGTH_SHORT)
                     .show();
         }

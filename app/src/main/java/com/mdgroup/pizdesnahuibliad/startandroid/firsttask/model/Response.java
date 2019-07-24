@@ -6,8 +6,8 @@ public class Response {
     // По завершению Прасинга мы получаем из JSON файла список List<Data> (Результат)
     // В этом Классе инициализирован список dataLis и описаны гетеры и сетеры для него
 
-    private ArrayList<Data> dataLis = null;
+    private ArrayList<Data> dataList = null;
 
-    public ArrayList<Data> getDataLis(){return dataLis;}
-    public void setDataLis(ArrayList<Data> dataLis){this.dataLis = dataLis;}
+    public ArrayList<Data> getDataList(){return dataList;}
+    public void setDataList(ArrayList<Data> dataList){this.dataList = dataList;}
 }

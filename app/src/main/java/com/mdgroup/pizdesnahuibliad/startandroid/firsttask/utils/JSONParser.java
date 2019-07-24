@@ -1,8 +1,6 @@
 package com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils;
 
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.FromCity;
@@ -11,12 +9,11 @@ import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.ToCity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.List;
 
 public class JSONParser {
         // метод принимает Json файл в виде строчки, парсит и возвращает обьектную переменную коасса
         // Response ( обьектная переменная response которая хранит результат парсинга)
-    public Response parse(String stringJson) {
+    public static Response parse(String stringJson) {
 
         try {
             //Присваеваем в обьектной переменной objectResponse Json файл в виде строчки
@@ -71,7 +68,7 @@ public class JSONParser {
 
             }
             //Передаем список обьектов dataList в соответствующую переменную Класа Response
-            response.setDataLis(dataList);
+            response.setDataList(dataList);
             Log.d("CREATION", response.toString());
             return response;
         } catch (Exception e) {

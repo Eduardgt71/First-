@@ -8,23 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
-import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
+
 
 import java.util.ArrayList;
 
 public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberViewHolder> {
 
-    private static int viewHolderCount;
+
     private int numberItems;
-    private Response response;
     private ArrayList<Data> dataArrayList;
 
     public NumbersAdapter(int numberOfItems, ArrayList<Data> dataArrayList){
         numberItems = numberOfItems;
         this.dataArrayList = dataArrayList;
-        viewHolderCount = 0;
+
     }
 
     //Метод который гинерирует компонент из файла number_list_item
@@ -34,29 +32,22 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
     public NumberViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         int layoutIdForLisItem = R.layout.number_list_item;
-
         LayoutInflater inflater = LayoutInflater.from(context);
-        //Создаем новый элемент списка
         View view = inflater.inflate(layoutIdForLisItem, viewGroup, false);
         NumberViewHolder viewHolder = new NumberViewHolder(view);
-//        response = new Response();
-//        for(int el=0; el<dataArrayList.size();el++){
-//
-//            viewHolder.viewHolderIndex.setText("ViewHolder index" + dataArrayList.get(el));
-//        }
-        //Вставить сюда элемент из Json файла
-        viewHolder.viewHolderIndex.setText("ViewHolder index " + dataArrayList);
 
-        viewHolderCount++;
+
         return viewHolder;
 
     }
 
     //при прокрутке обновляем значени Holdera (меняем значение listNumberView)
     @Override
-    public void onBindViewHolder(NumberViewHolder numberViewHolder, int position) {
-        numberViewHolder.bind(position);
+    public void onBindViewHolder(NumberViewHolder holder, int position) {
+Data data = dataArrayList.get(position);
 
+            holder.idTextView.setText(data.getId().toString());
+            holder.fromCityTextView.setText(data.getFromCity().getName());
     }
 
     @Override
@@ -66,18 +57,15 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
 
     class NumberViewHolder extends RecyclerView.ViewHolder{
 
-        TextView listNumberView;
-        TextView viewHolderIndex;
+        TextView idTextView;
+        TextView fromCityTextView;
+
 
         public NumberViewHolder(View itemView) {
             super(itemView);
+            idTextView = itemView.findViewById(R.id.idTextView);
+            fromCityTextView = itemView.findViewById(R.id.fromCityTextView);
 
-            listNumberView = itemView.findViewById(R.id.tv_number_item);
-            viewHolderIndex = itemView.findViewById(R.id.tv_view_holder_number);
-        }
-
-        void bind(int listIndex){
-            listNumberView.setText(String.valueOf(listIndex));
         }
     }
 }

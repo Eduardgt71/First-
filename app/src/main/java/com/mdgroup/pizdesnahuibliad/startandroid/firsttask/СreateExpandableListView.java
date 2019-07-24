@@ -69,7 +69,7 @@
 ////    }
 //
 //    Response response = new Response();
-//    ArrayList datalist = response.getDataLis();
+//    ArrayList datalist = response.getDataList();
 //
 //    // коллекция для групп
 //    public ArrayList<Map<String, String>> groupData;
