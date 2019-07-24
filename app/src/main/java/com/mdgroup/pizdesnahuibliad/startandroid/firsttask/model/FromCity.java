@@ -10,7 +10,7 @@ public class FromCity {
     private int id;
     private String name;
 
-    public int getHighlight() {
+    public Integer getHighlight() {
         return highlight;
     }
 
@@ -18,7 +18,7 @@ public class FromCity {
         this.highlight = highlight;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -98,7 +98,6 @@ public class ProgressFragment extends Fragment {
             contentView.setText(content);
 
             response = JSONParser.parse(content);
-
             datalist = response.getDataList();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             numbersList.setLayoutManager(linearLayoutManager);

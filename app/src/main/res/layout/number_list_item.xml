@@ -1,41 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/idTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start" />
+        android:text="TextView"/>
 
-    <TextView
-        android:id="@+id/fromCityTextView"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fromCityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/fromCityIdTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/fromCityHighlightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="TextView" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/fromDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <TextView
         android:id="@+id/fromTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <TextView
         android:id="@+id/fromInfoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
-    <TextView
-        android:id="@+id/toCityTextView"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/toCityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/toCityIdTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/toCityHighlightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="TextView" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/toDateTextView"
         android:layout_width="wrap_content"
@@ -47,26 +93,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <TextView
         android:id="@+id/toInfoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <TextView
         android:id="@+id/infoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <TextView
         android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <TextView
         android:id="@+id/bus_idTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <TextView
         android:id="@+id/reservationCountTextView"
         android:layout_width="wrap_content"
