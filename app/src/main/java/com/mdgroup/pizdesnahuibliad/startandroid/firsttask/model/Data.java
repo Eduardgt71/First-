@@ -38,7 +38,6 @@ public class Data  {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -46,7 +45,6 @@ public class Data  {
     public FromCity getFromCity() {
         return from_city;
     }
-
     public void setFromCity(FromCity from_city) {
         this.from_city = from_city;
     }
@@ -54,7 +52,6 @@ public class Data  {
     public String getFrom_date() {
         return from_date;
     }
-
     public void setFrom_date(String from_date) {
         this.from_date = from_date;
     }
@@ -62,7 +59,6 @@ public class Data  {
     public String getFrom_time() {
         return from_time;
     }
-
     public void setFrom_time(String from_time) {
         this.from_time = from_time;
     }
@@ -70,7 +66,6 @@ public class Data  {
     public String getFrom_info() {
         return from_info;
     }
-
     public void setFrom_info(String from_info) {
         this.from_info = from_info;
     }
@@ -78,7 +73,6 @@ public class Data  {
     public ToCity getToCity() {
         return to_city;
     }
-
     public void setToCity(ToCity to_city) {
         this.to_city = to_city;
     }
@@ -86,7 +80,6 @@ public class Data  {
     public String getTo_date() {
         return to_date;
     }
-
     public void setTo_date(String to_date) {
         this.to_date = to_date;
     }
@@ -94,7 +87,6 @@ public class Data  {
     public String getTo_time() {
         return to_time;
     }
-
     public void setTo_time(String to_time) {
         this.to_time = to_time;
     }
@@ -102,7 +94,6 @@ public class Data  {
     public String getTo_info() {
         return to_info;
     }
-
     public void setTo_info(String to_info) {
         this.to_info = to_info;
     }
@@ -110,31 +101,28 @@ public class Data  {
     public String getInfo() {
         return info;
     }
-
     public void setInfo(String info) {
         this.info = info;
     }
 
-    public int getPrice() {
+
+    public Integer getPrice() {
         return price;
     }
-
     public void setPrice(int price) {
         this.price = price;
     }
 
-    public int getBus_id() {
+    public Integer getBus_id() {
         return bus_id;
     }
-
     public void setBus_id(int bus_id) {
         this.bus_id = bus_id;
     }
 
-    public int getReservation_count() {
+    public Integer getReservation_count() {
         return reservation_count;
     }
-
     public void setReservation_count(int reservation_count) {
         this.reservation_count = reservation_count;
     }
