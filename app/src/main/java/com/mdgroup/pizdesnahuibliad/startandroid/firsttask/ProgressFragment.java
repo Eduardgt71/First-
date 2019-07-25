@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase.FillingDataBase;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils.JSONParser;
@@ -89,6 +90,7 @@ public class ProgressFragment extends Fragment {
             }
             JSONParser jsonParser = new JSONParser();
             jsonParser.parse(stringJson);
+
             return stringJson;
         }
 
@@ -96,13 +98,17 @@ public class ProgressFragment extends Fragment {
         protected void onPostExecute(String content) {
             contentText = content;
             contentView.setText(content);
-
+            //создание списка на базе результата парсинга
             response = JSONParser.parse(content);
             datalist = response.getDataList();
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             numbersList.setLayoutManager(linearLayoutManager);
             listAdapter = new NumbersAdapter(datalist);
             numbersList.setAdapter(listAdapter);
+
+            FillingDataBase fillingDataBase = new FillingDataBase(getContext());
+            fillingDataBase.fillingData(response);
+
             Toast.makeText(getActivity(), "Данные загружены", Toast.LENGTH_SHORT)
                     .show();
         }
