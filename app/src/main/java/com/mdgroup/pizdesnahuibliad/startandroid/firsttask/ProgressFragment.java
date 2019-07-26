@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase.FillingDataBase;
+import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase.ReadDataBase;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils.JSONParser;
@@ -30,13 +31,14 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ProgressFragment extends Fragment {
 
-    Button btnFetch, showList;
-    FragmentTransaction fTrans;
-    NumbersAdapter listAdapter;
-    RecyclerView numbersList;
-    ScrollView scroller;
-    Response response;
-    ArrayList<Data> datalist;
+   private Button btnFetch, showList;
+   private NumbersAdapter listAdapter;
+   private RecyclerView numbersList;
+   private ScrollView scroller;
+   private Response response;
+   private ArrayList<Data> datalist;
+   private FillingDataBase fillingDataBase;
+   private ReadDataBase readDataBase;
 
 
     TextView contentView;
@@ -88,6 +90,7 @@ public class ProgressFragment extends Fragment {
             } catch (IOException ex) {
                 stringJson = ex.getMessage();
             }
+            //Передаем в парсер Json файл в виде строки
             JSONParser jsonParser = new JSONParser();
             jsonParser.parse(stringJson);
 
@@ -98,16 +101,22 @@ public class ProgressFragment extends Fragment {
         protected void onPostExecute(String content) {
             contentText = content;
             contentView.setText(content);
-            //создание списка на базе результата парсинга
+            //1 присваеваем переменной резулььтат выполнения метода
+            //2 присваиваем списку ссылку на список елементов
             response = JSONParser.parse(content);
             datalist = response.getDataList();
+
+            //Заполнение базы данных
+            fillingDataBase = new FillingDataBase(getContext());
+            fillingDataBase.fillingData(response);
+
+            //создание списка на базе результата парсинга
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
             numbersList.setLayoutManager(linearLayoutManager);
             listAdapter = new NumbersAdapter(datalist);
             numbersList.setAdapter(listAdapter);
 
-            FillingDataBase fillingDataBase = new FillingDataBase(getContext());
-            fillingDataBase.fillingData(response);
+
 
             Toast.makeText(getActivity(), "Данные загружены", Toast.LENGTH_SHORT)
                     .show();
