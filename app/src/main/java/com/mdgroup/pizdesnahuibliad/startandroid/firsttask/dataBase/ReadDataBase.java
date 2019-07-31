@@ -17,38 +17,33 @@ import java.util.ArrayList;
 
 public class ReadDataBase {
     private ArrayList<Data> dataListDB;
-    private Data dataDB;
-    private ToCity toCityDB;
-    private FromCity fromCityDB;
-    private Response responseDB;
-    private Cursor cursor;
-    private Context context;
+
     private DBHelper dbHelper;
     private SQLiteDatabase db ;
 
 
     public ReadDataBase(Context context) {
-        this.context = context;
+        dbHelper = new DBHelper(context);
     }
 
     // медод чтения данных с таблици в Список
-    public Response readerDB() {
-        dbHelper = new DBHelper(context);
+    public ArrayList readerDB() {
         db = dbHelper.getWritableDatabase();
+        Cursor cursor;
+
 
         try {
             db.beginTransaction();
             // Запрос к таблице
             cursor = db.query("data", null, null, null, null, null, null);
-            dataDB = new Data();
-            fromCityDB = new FromCity();
-            toCityDB = new ToCity();
-            responseDB = new Response();
+
+
             dataListDB = new ArrayList<>();
+
 
             if (cursor.moveToFirst()) {
 
-                int dataidColIndex = cursor.getColumnIndex("data_id");
+                int dataIdColIndex = cursor.getColumnIndex("data_id");
                 int fromCityHighlightColIndex = cursor.getColumnIndex("from_city_highlight");
                 int fromCityIdColIndex = cursor.getColumnIndex("from_city_id");
                 int fromCityNameColIndex = cursor.getColumnIndex("from_city_name");
@@ -59,18 +54,23 @@ public class ReadDataBase {
                 int toCityIdColIndex = cursor.getColumnIndex("to_city_id");
                 int toCityNameColIndex = cursor.getColumnIndex("to_city_name");
                 int toDateColIndex = cursor.getColumnIndex("to_date");
-                do {
-                    dataDB.setId(cursor.getInt(dataidColIndex));
+                while (cursor.moveToNext()) {
+                    Data dataDB = new Data();
+                    dataDB.setId(cursor.getInt(dataIdColIndex));
+                    FromCity fromCityDB = new FromCity();
                     fromCityDB.setHighlight(cursor.getInt(fromCityHighlightColIndex));
                     fromCityDB.setId(cursor.getInt(fromCityIdColIndex));
                     fromCityDB.setName(cursor.getString(fromCityNameColIndex));
+
                     dataDB.setFromCity(fromCityDB);
                     dataDB.setId(cursor.getInt(fromDateColIndex));
                     dataDB.setId(cursor.getInt(fromTimeColIndex));
                     dataDB.setId(cursor.getInt(fromInfoColIndex));
+                    ToCity toCityDB = new ToCity();
                     toCityDB.setHighlight(cursor.getInt(toCityHighlightColIndex));
                     toCityDB.setId(cursor.getInt(toCityIdColIndex));
                     toCityDB.setName(cursor.getString(toCityNameColIndex));
+
                     dataDB.setToCity(toCityDB);
 
                     dataDB.setTo_date(cursor.getString(toDateColIndex));
@@ -81,15 +81,16 @@ public class ReadDataBase {
                     dataDB.setBus_id(cursor.getInt(cursor.getColumnIndex("bus_id")));
                     dataDB.setReservation_count(cursor.getInt(cursor.getColumnIndex("reservation_count")));
                     dataListDB.add(dataDB);
+
                 }
-                while (cursor.moveToNext());
+
             }
         } catch (SQLException e) {
             Log.d("FATAL", String.valueOf(e));
         } finally {
             db.endTransaction();
         }
-        responseDB.setDataList(dataListDB);
-        return responseDB;
+        return dataListDB;
     }
+
 }

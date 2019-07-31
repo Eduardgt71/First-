@@ -1,8 +1,10 @@
 package com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 //Клас в котором создается База данных myDataBase
 public class DBHelper extends SQLiteOpenHelper {
@@ -40,4 +42,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+
 }

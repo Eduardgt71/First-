@@ -14,21 +14,17 @@ import java.util.List;
 
 public class FillingDataBase {
 
-    private DBHelper dbHelper;
     private  SQLiteDatabase db;
-    private List<Data> dataList;
-    private Context context;
+    long rowIdData;
 
     public FillingDataBase(Context context){
-        this.context = context;
-        dbHelper = new DBHelper(context);
+
+        DBHelper dbHelper = new DBHelper(context);
         db = dbHelper.getWritableDatabase();
     }
 
-
-
     public void fillingData(Response response){
-        dataList = response.getDataList();
+        ArrayList<Data>  dataList = response.getDataList();
 
         try {
             db.beginTransaction();
@@ -54,13 +50,13 @@ public class FillingDataBase {
                 contentValues.put("price", data.getPrice());
                 contentValues.put("bus_id", data.getBus_id());
                 contentValues.put("reservation_count", data.getReservation_count());
-                long rowIdData = db.insert("data", null, contentValues);
-                Log.d("FILLING", "row insert Id = " + rowIdData);
+                rowIdData = db.insert("data", null, contentValues);
             }
         } catch (SQLException e){
             Log.d("FATAL", String.valueOf(e));
         } finally {
             db.endTransaction();
         }
+        Log.d("FILLING", "row insert Id = " + rowIdData);
     }
 }
