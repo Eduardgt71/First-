@@ -10,14 +10,14 @@ import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class FillingDataBase {
+
+public class WriteDataBase {
 
     private  SQLiteDatabase db;
     long rowIdData;
 
-    public FillingDataBase(Context context){
+    public WriteDataBase(Context context){
 
         DBHelper dbHelper = new DBHelper(context);
         db = dbHelper.getWritableDatabase();

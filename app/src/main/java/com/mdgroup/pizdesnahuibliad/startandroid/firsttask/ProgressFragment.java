@@ -1,19 +1,26 @@
 package com.mdgroup.pizdesnahuibliad.startandroid.firsttask;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Data;
+import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
+
 import java.util.ArrayList;
 
 
 
-public class ProgressFragment extends Fragment {
+public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public RecyclerView numbersList;
+    private SwipeRefreshLayout swipeLayout;
+    private ListSelection.CacheInterface cacheInterface;
 
 
 
@@ -24,11 +31,18 @@ public class ProgressFragment extends Fragment {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_progress, container, false);
 
+        swipeLayout =  view.findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeColors(android.R.color.holo_green_dark,
+                android.R.color.holo_red_dark,
+                android.R.color.holo_blue_dark,
+                android.R.color.holo_orange_dark);
 
         //Создание списка
         ListSelection listSelection = new ListSelection(getContext(), new ListSelection.CacheInterface() {
@@ -50,7 +64,23 @@ public class ProgressFragment extends Fragment {
         numbersList.setLayoutManager(linearLayoutManager);
         NumbersAdapter listAdapter = new NumbersAdapter(dataList);
         numbersList.setAdapter(listAdapter);
+
+
     }
 
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                new NetworkProgressTask(getContext(), new TaskInterface() {
+                    @Override
+                    public void onSuccessful(Response response) {
+                        if(cacheInterface != null) cacheInterface.onSuccessful(response.getDataList());
+                    }
+                }).execute("https://gist.githubusercontent.com/pavel-zlotarenchuk/2eefe88a5fbf5519e2cb98d1062d7104/raw/a833d16ba01cb740d0e029e8698ee611ffbfa172/testtesk");
+                //Останавливаем обновление:
+                swipeLayout.setRefreshing(false)
+                ;}}, 5000);
+    }
 }
 

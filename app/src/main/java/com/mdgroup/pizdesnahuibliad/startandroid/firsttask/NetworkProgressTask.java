@@ -2,10 +2,8 @@ package com.mdgroup.pizdesnahuibliad.startandroid.firsttask;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
 
-import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase.FillingDataBase;
+import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase.WriteDataBase;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils.JSONParser;
 
@@ -16,12 +14,12 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ProgressTask extends AsyncTask<String, Void, String> {
+public class NetworkProgressTask extends AsyncTask<String, Void, String> {
 
     private Context context;
-   private TaskInterface listener;
+    private TaskInterface listener;
 
-    public  ProgressTask(Context context, TaskInterface listener){
+    public NetworkProgressTask(Context context, TaskInterface listener){
         this.context = context;
         this.listener = listener;
     }
@@ -38,6 +36,7 @@ public class ProgressTask extends AsyncTask<String, Void, String> {
         JSONParser jsonParser = new JSONParser();
         jsonParser.parse(stringJson);
 
+
         return stringJson;
     }
 
@@ -46,10 +45,12 @@ public class ProgressTask extends AsyncTask<String, Void, String> {
         //1 присваеваем переменной резулььтат выполнения метода
         Response response = JSONParser.parse(jsonString);
         //Заполнение базы данных
-        FillingDataBase fillingDataBase = new FillingDataBase(context);
-        fillingDataBase.fillingData(response);
-
+        WriteDataBase writeDataBase = new WriteDataBase(context);
+        writeDataBase.fillingData(response);
         if (listener != null) listener.onSuccessful(response);
+        //Записываем джисон в файл
+        FileManager fileManager = new FileManager();
+        fileManager.writeFile(jsonString);
     }
 
     private String getContent(String path) throws IOException {
@@ -73,9 +74,6 @@ public class ProgressTask extends AsyncTask<String, Void, String> {
             }
         }
     }
-
-
-
 }
 
 
