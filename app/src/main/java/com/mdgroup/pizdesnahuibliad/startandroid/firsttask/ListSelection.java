@@ -23,11 +23,6 @@ public class ListSelection {
         this.context = context;
         this.cacheInterface = cacheInterface;
     }
-
-
-
-
-
     // Проверяет на наличее строчек в таблице
     private Cursor checkDataBase(){
         SQLiteDatabase db = DBHelper.getInstance(context);
@@ -35,20 +30,19 @@ public class ListSelection {
         Log.i("NumberRecords"," :: "+cursor.getCount());
         return cursor;
     }
-
-
     // Выбераем откуда будем брать данные для списка
     public void selection() {
-        FileManager fileManager = new FileManager();
-//        Cursor cursor = checkDataBase();
-//
-//        if (cursor.getCount()>0){
-//            //Чтение таблици
-//            ReadDataBase readDataBase = new ReadDataBase(context);
-//            ArrayList<Data> datalist = readDataBase.readerDB();
-//            if(cacheInterface != null) cacheInterface.onSuccessful(datalist);
-//
-//        }else
+        FileManager fileManager = new FileManager(context);
+        Cursor cursor = checkDataBase();
+
+        if (cursor.getCount()>0){
+            //Чтение таблици
+            ReadDataBase readDataBase = new ReadDataBase(context);
+            ArrayList<Data> datalist = readDataBase.readerDB();
+            if(cacheInterface != null) cacheInterface.onSuccessful(datalist);
+
+        }
+        else
 
             if(fileManager.getFolderSize()) {
             new LocalFileTask(context, new TaskInterface() {
@@ -58,7 +52,6 @@ public class ListSelection {
                 }
             }).execute();
         }
-
         else{
             new NetworkProgressTask(context, new TaskInterface() {
                 @Override
@@ -69,8 +62,6 @@ public class ListSelection {
         }
 
     }
-
-
     interface CacheInterface{
         void onSuccessful(ArrayList<Data> dataList);
     }

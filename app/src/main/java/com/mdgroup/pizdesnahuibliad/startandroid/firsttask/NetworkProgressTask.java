@@ -52,7 +52,7 @@ public class NetworkProgressTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String jsonString) {
         Response response = JSONParser.parse(jsonString);
         //Записываем джисон в файл
-        FileManager fileManager = new FileManager();
+        FileManager fileManager = new FileManager(context);
         fileManager.writeFile(jsonString);
         if (listener != null) listener.onSuccessful(response);
     }

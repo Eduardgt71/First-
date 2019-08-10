@@ -1,81 +1,91 @@
 package com.mdgroup.pizdesnahuibliad.startandroid.firsttask.fileManager;
 
-import android.app.Activity;
-import android.os.Environment;
-import android.util.Log;
+import android.content.Context;
+import android.widget.Toast;
 
-import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.BuildConfig;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
+public class FileManager {
+    public String jsonString;
+    private  Context context;
 
-
-public class FileManager extends Activity {
-    public String stringJsonFile;
-
-
-    public File CreateFile() {
-         try {
-            String PATH = Environment.getExternalStorageDirectory().getPath() + "/" + BuildConfig.APPLICATION_ID + "/json.txt";
-            File file = new File(PATH);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-             return file;
-        }catch (IOException e){
-             Log.d ("exeption", e.toString());
-         }
-        return null;
+    public FileManager(Context context) {
+        this.context = context;
     }
+
+    private final static String FILE_NAME = "json.txt";
+//    public File CreateFile() {
+//         try {
+//            String PATH = Environment.getExternalStorageDirectory().getPath() + "/" + BuildConfig.APPLICATION_ID + "/json.txt";
+//            File file = new File(PATH);
+//            if (!file.exists()) {
+//                file.createNewFile();
+//            }
+//             return file;
+//        }catch (IOException e){
+//             Log.d ("exeption", e.toString());
+//         }
+//        return null;
+//    }
 
     public void writeFile(String jsonString)  {
+
+        FileOutputStream fileOutputStream = null;
         try {
-            if (CreateFile() != null){
-                // отрываем поток для записи
-                BufferedWriter bw = new BufferedWriter(new FileWriter(CreateFile()));
-                // пишем данные
-                bw.write(jsonString);
-                // закрываем поток
-                bw.close();
-                Log.d("WRITEFILE", "Файл записан");
+            fileOutputStream = context.openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fileOutputStream.write(jsonString.getBytes());
+            Toast.makeText(context, "Файл сохранен", Toast.LENGTH_SHORT).show();
+        }
+        catch(IOException ex) {
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        finally{
+            try{
+                if(fileOutputStream!=null)
+                    fileOutputStream.close();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            catch(IOException ex){
+
+                Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
+    // открытие файла
+    public String readFile(){
 
-    public String readFile() {
+        FileInputStream fileInputStream = null;
         try {
-
-            // открываем поток для чтения
-            BufferedReader  bufferedReader = new BufferedReader(new InputStreamReader(
-                    openFileInput("json")));
-           stringJsonFile = "";
-            // читаем содержимое
-            while ((stringJsonFile = bufferedReader.readLine()) != null) {
-               // Log.d("READFILE", stringJsonFile);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            fileInputStream = context.openFileInput(FILE_NAME);
+            byte[] bytes = new byte[fileInputStream.available()];
+            fileInputStream.read(bytes);
+            jsonString = new String (bytes);
+            return jsonString;
         }
-        return stringJsonFile;
-    }
+        catch(IOException ex) {
 
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        finally{
+
+            try{
+                if(fileInputStream!=null)
+                    fileInputStream.close();
+            }
+            catch(IOException ex){
+                Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        return null;
+    }
     // Проверяем наличие файла
     public boolean getFolderSize() {
-        if(null!=CreateFile()) {
-            return CreateFile().exists();
+    if(null != jsonString) {
+            return true;
         }else{return false;}
     }
 }

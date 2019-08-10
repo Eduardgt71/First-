@@ -11,7 +11,7 @@ import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils.JSONParser;
 
 public class LocalFileTask extends AsyncTask<String, Void, Response> {
 
-    Context context;
+    private Context context;
 
     private TaskInterface listener;
 
@@ -25,7 +25,7 @@ public class LocalFileTask extends AsyncTask<String, Void, Response> {
 
     @Override
     protected Response doInBackground(String... strings) {
-        FileManager fileManager = new FileManager();
+        FileManager fileManager = new FileManager(context);
         String stringJsonFile = fileManager.readFile();
         //Передаем в парсер Json файл из списка
         return JSONParser.parse(stringJsonFile);

@@ -46,7 +46,9 @@ public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnR
         numbersList = view.findViewById(R.id.rv_numbers);
         numbersList.setVisibility(View.VISIBLE);
 
-        //  if(savedInstanceState == null){
+
+
+          if(savedInstanceState == null || savedInstanceState.containsKey("list")){
         //Создание списка
         listSelection = new ListSelection(getContext(), new ListSelection.CacheInterface() {
             @Override
@@ -57,12 +59,12 @@ public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnR
         listSelection.selection();
 
 
-//        }else {
-//            //   String mData = savedInstanceState.getString("text");
-//
-//            ArrayList datalist = savedInstanceState.getParcelableArrayList("list");
-//            reloadAdapter(datalist);
-//        }
+        }else {
+            //   String mData = savedInstanceState.getString("text");
+
+            ArrayList datalist = savedInstanceState.getParcelableArrayList("list");
+            reloadAdapter(datalist);
+        }
         return view;
     }
 
@@ -89,7 +91,6 @@ public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     // Обновление по свайпу
     public void onRefresh() {
-
         new NetworkProgressTask(getContext(), new TaskInterface() {
             @Override
             public void onSuccessful(Response response) {

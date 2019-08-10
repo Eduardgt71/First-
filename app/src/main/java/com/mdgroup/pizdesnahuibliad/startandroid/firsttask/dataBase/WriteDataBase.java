@@ -49,7 +49,6 @@ public class WriteDataBase {
                 contentValues.put("bus_id", data.getBus_id());
                 contentValues.put("reservation_count", data.getReservation_count());
                 rowIdData = db.insert("data", null, contentValues);
-                Log.d("FILLING", "row insert Id = " + rowIdData);
             }
         } catch (SQLException e){
             Log.d("FATAL", String.valueOf(e));
