@@ -1,8 +1,11 @@
-package com.mdgroup.pizdesnahuibliad.startandroid.firsttask;
+package com.mdgroup.pizdesnahuibliad.startandroid.firsttask.fileManager;
 
 import android.app.Activity;
 import android.os.Environment;
 import android.util.Log;
+
+import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.BuildConfig;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,7 +23,7 @@ public class FileManager extends Activity {
 
     public File CreateFile() {
          try {
-            String PATH = Environment.getExternalStorageDirectory().getPath() + "/" + BuildConfig.APPLICATION_ID + "/json";
+            String PATH = Environment.getExternalStorageDirectory().getPath() + "/" + BuildConfig.APPLICATION_ID + "/json.txt";
             File file = new File(PATH);
             if (!file.exists()) {
                 file.createNewFile();

@@ -1,17 +1,24 @@
 package com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
 
 //Клас в котором создается База данных myDataBase
 public class DBHelper extends SQLiteOpenHelper {
 
+    private static SQLiteDatabase INSTANCE = null;
 
-    public DBHelper(Context context){
+    private DBHelper(Context context){
         super(context, "myDataBase",null, 1);
+    }
+
+    public static  SQLiteDatabase getInstance(Context context){
+        if (INSTANCE ==null) {
+            INSTANCE = new DBHelper(context).getWritableDatabase();
+        }
+        return INSTANCE;
     }
 
     @Override

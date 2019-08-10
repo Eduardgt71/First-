@@ -1,7 +1,9 @@
-package com.mdgroup.pizdesnahuibliad.startandroid.firsttask;
+package com.mdgroup.pizdesnahuibliad.startandroid.firsttask.fileManager;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.TaskInterface;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils.JSONParser;
 

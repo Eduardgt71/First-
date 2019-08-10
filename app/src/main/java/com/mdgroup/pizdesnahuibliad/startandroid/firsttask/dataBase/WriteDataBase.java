@@ -2,6 +2,7 @@ package com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -18,16 +19,13 @@ public class WriteDataBase {
     long rowIdData;
 
     public WriteDataBase(Context context){
-
-        DBHelper dbHelper = new DBHelper(context);
-        db = dbHelper.getWritableDatabase();
+        db = DBHelper.getInstance(context);
     }
 
     public void fillingData(Response response){
         ArrayList<Data>  dataList = response.getDataList();
-
         try {
-            db.beginTransaction();
+            //db.beginTransaction();
             if (!dataList.isEmpty())
                 db.execSQL("DELETE FROM data");
             for (int i = 0; i < dataList.size(); i++) {
@@ -51,12 +49,14 @@ public class WriteDataBase {
                 contentValues.put("bus_id", data.getBus_id());
                 contentValues.put("reservation_count", data.getReservation_count());
                 rowIdData = db.insert("data", null, contentValues);
+                Log.d("FILLING", "row insert Id = " + rowIdData);
             }
         } catch (SQLException e){
             Log.d("FATAL", String.valueOf(e));
         } finally {
-            db.endTransaction();
+            //db.endTransaction();
         }
+        Cursor cursor = db.query("data", null, null, null, null, null, null);
         Log.d("FILLING", "row insert Id = " + rowIdData);
     }
 }

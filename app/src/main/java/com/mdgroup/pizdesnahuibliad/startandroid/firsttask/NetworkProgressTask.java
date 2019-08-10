@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.dataBase.WriteDataBase;
+import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.fileManager.FileManager;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.utils.JSONParser;
 
@@ -19,10 +20,12 @@ public class NetworkProgressTask extends AsyncTask<String, Void, String> {
     private Context context;
     private TaskInterface listener;
 
-    public NetworkProgressTask(Context context, TaskInterface listener){
+    NetworkProgressTask(Context context, TaskInterface listener){
         this.context = context;
         this.listener = listener;
     }
+
+
 
     @Override
     protected String doInBackground(String... path) {
@@ -36,21 +39,22 @@ public class NetworkProgressTask extends AsyncTask<String, Void, String> {
         JSONParser jsonParser = new JSONParser();
         jsonParser.parse(stringJson);
 
+        //1 присваеваем переменной резулььтат выполнения метода
+        Response response = JSONParser.parse(stringJson);
+        //Заполнение базы данных
+        WriteDataBase writeDataBase = new WriteDataBase(context);
+        writeDataBase.fillingData(response);
 
         return stringJson;
     }
 
     @Override
     protected void onPostExecute(String jsonString) {
-        //1 присваеваем переменной резулььтат выполнения метода
         Response response = JSONParser.parse(jsonString);
-        //Заполнение базы данных
-        WriteDataBase writeDataBase = new WriteDataBase(context);
-        writeDataBase.fillingData(response);
-        if (listener != null) listener.onSuccessful(response);
         //Записываем джисон в файл
         FileManager fileManager = new FileManager();
         fileManager.writeFile(jsonString);
+        if (listener != null) listener.onSuccessful(response);
     }
 
     private String getContent(String path) throws IOException {

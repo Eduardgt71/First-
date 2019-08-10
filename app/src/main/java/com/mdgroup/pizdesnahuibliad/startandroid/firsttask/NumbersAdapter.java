@@ -51,18 +51,18 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
         holder.fromCityIdTextView.setText(data.getFromCity().getId().toString());
         holder.fromCityHighlightTextView.setText(data.getFromCity().getHighlight().toString());
 
-        holder.fromDateTextView.setText(data.getFrom_date().toString());
-        holder.fromTimeTextView.setText(data.getFrom_time().toString());
-        holder.fromInfoTextView.setText(data.getFrom_info().toString());
+        holder.fromDateTextView.setText(data.getFrom_date());
+        holder.fromTimeTextView.setText(data.getFrom_time());
+        holder.fromInfoTextView.setText(data.getFrom_info());
 
         holder.toCityTextView.setText(data.getToCity().getName());
         holder.toCityIdTextView.setText(data.getToCity().getId().toString());
         holder.toCityHighlightTextView.setText(data.getToCity().getHighlight().toString());
 
-        holder.toDateTextView.setText(data.getTo_date().toString());
-        holder.toTimeTextView.setText(data.getTo_time().toString());
-        holder.toInfoTextView.setText(data.getTo_info().toString());
-        holder.InfoTextView.setText(data.getInfo().toString());
+        holder.toDateTextView.setText(data.getTo_date());
+        holder.toTimeTextView.setText(data.getTo_time());
+        holder.toInfoTextView.setText(data.getTo_info());
+        holder.InfoTextView.setText(data.getInfo());
         holder.priceTextView.setText(data.getPrice().toString());
         holder.busIdTextView.setText(data.getBus_id().toString());
         holder.reservationCountTextView.setText(data.getReservation_count().toString());
@@ -74,20 +74,17 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
     }
 
 
-    //Класс в котором реализуем что будет входить в холдер, в танном случаи холдер состоит из множества
+    //Класс в котором реализуем что будет входить в холдер, в данном случаи холдер состоит из множества
     // текст вайф
     class NumberViewHolder extends RecyclerView.ViewHolder {
 
         TextView idTextView,
-                fromCityTextView,
-                fromCityIdTextView,
-                fromCityHighlightTextView,
+                fromCityTextView,fromCityIdTextView,fromCityHighlightTextView,
+
                 fromDateTextView,
                 fromTimeTextView,
                 fromInfoTextView,
-                toCityTextView,
-                toCityIdTextView,
-                toCityHighlightTextView,
+                toCityTextView,toCityIdTextView,toCityHighlightTextView,
                 toDateTextView,
                 toTimeTextView,
                 toInfoTextView,
@@ -129,7 +126,7 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
                     fromCityHighlightTextView.setVisibility(View.VISIBLE);
                 }
             });
-            toCityIdTextView.setOnClickListener(new View.OnClickListener() {
+            toCityTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     toCityIdTextView.setVisibility(View.VISIBLE);
