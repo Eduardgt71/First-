@@ -40,7 +40,6 @@ public class ListSelection {
             ReadDataBase readDataBase = new ReadDataBase(context);
             ArrayList<Data> datalist = readDataBase.readerDB();
             if(cacheInterface != null) cacheInterface.onSuccessful(datalist);
-
         }
         else
 

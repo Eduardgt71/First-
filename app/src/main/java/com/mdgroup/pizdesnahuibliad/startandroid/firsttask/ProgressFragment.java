@@ -15,14 +15,13 @@ import com.mdgroup.pizdesnahuibliad.startandroid.firsttask.model.Response;
 
 import java.util.ArrayList;
 
-
 public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public RecyclerView numbersList;
     private SwipeRefreshLayout swipeLayout;
     private ListSelection listSelection;
     private ListSelection.CacheInterface cacheInterface;
-
+    private ArrayList arrayList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,11 +30,12 @@ public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     }
 
+    View view;
     @SuppressLint("ResourceAsColor")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_progress, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);
+        view = inflater.inflate(R.layout.fragment_progress, container, false);
         swipeLayout = view.findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeColors(android.R.color.holo_green_dark,
@@ -46,42 +46,32 @@ public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnR
         numbersList = view.findViewById(R.id.rv_numbers);
         numbersList.setVisibility(View.VISIBLE);
 
-
-
-          if(savedInstanceState == null || savedInstanceState.containsKey("list")){
-        //Создание списка
-        listSelection = new ListSelection(getContext(), new ListSelection.CacheInterface() {
-            @Override
-            public void onSuccessful(ArrayList<Data> dataList) {
-                reloadAdapter(dataList);
+        if (savedInstanceState == null) {
+            // Если представления нет, создаем его
+            listSelection = new ListSelection(getContext(), new ListSelection.CacheInterface() {
+                @Override
+                public void onSuccessful(ArrayList<Data> dataList) {
+                    reloadAdapter(dataList);
+                }
+            });
+            listSelection.selection();
+        } else
+            if (savedInstanceState.containsKey("list")) {
+                reloadAdapter(arrayList);
             }
-        });
-        listSelection.selection();
-
-
-        }else {
-            //   String mData = savedInstanceState.getString("text");
-
-            ArrayList datalist = savedInstanceState.getParcelableArrayList("list");
-            reloadAdapter(datalist);
-        }
         return view;
     }
 
-//    // Метод в котором я сохраняю данные для передачу в горизонтальное активити(поворотЕкрана)
-//    @Override
-//    public void onSaveInstanceState(final Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//       listSelection =  new ListSelection(getContext(), new ListSelection.CacheInterface(){
-//            @Override
-//            public void onSuccessful(ArrayList<Data> dataList) {
-//                ArrayList arrayList = dataList;
-//                outState.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) arrayList);
-//            }});
-//    }
+    // Метод в котором я сохраняю данные для передачу в горизонтальное активити(поворотЕкрана)
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("list", arrayList);
+        super.onSaveInstanceState(outState);
+    }
 
     // перезагрузка адаптера
     void reloadAdapter(ArrayList<Data> dataList) {
+        arrayList = dataList;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         numbersList.setLayoutManager(linearLayoutManager);
         NumbersAdapter listAdapter = new NumbersAdapter(dataList);
@@ -101,4 +91,3 @@ public class ProgressFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeLayout.setRefreshing(false);
     }
 }
-

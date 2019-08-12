@@ -80,7 +80,6 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
 
         TextView idTextView,
                 fromCityTextView,fromCityIdTextView,fromCityHighlightTextView,
-
                 fromDateTextView,
                 fromTimeTextView,
                 fromInfoTextView,
@@ -122,18 +121,26 @@ public class NumbersAdapter extends RecyclerView.Adapter<NumbersAdapter.NumberVi
             fromCityTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fromCityIdTextView.setVisibility(View.VISIBLE);
-                    fromCityHighlightTextView.setVisibility(View.VISIBLE);
+                    if(View.GONE == fromCityIdTextView.getVisibility())  {
+                        fromCityIdTextView.setVisibility(View.VISIBLE);
+                        fromCityHighlightTextView.setVisibility(View.VISIBLE);
+                    }else{
+                        fromCityIdTextView.setVisibility(View.GONE);
+                        fromCityHighlightTextView.setVisibility(View.GONE);}
                 }
             });
             toCityTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toCityIdTextView.setVisibility(View.VISIBLE);
-                    toCityHighlightTextView.setVisibility(View.VISIBLE);
+
+                    if(View.GONE == toCityIdTextView.getVisibility())  {
+                        toCityIdTextView.setVisibility(View.VISIBLE);
+                        toCityHighlightTextView.setVisibility(View.VISIBLE);
+                    }else{
+                    toCityIdTextView.setVisibility(View.GONE);
+                    toCityHighlightTextView.setVisibility(View.GONE);}
                 }
             });
-
         }
     }
 }

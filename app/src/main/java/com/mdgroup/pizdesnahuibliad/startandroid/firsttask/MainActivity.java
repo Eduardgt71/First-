@@ -5,14 +5,20 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null)
+        {
+            // Display the fragment as the main content.
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contentFragment, new ProgressFragment())
+                    .commit();
+        }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.contentFragment, new ProgressFragment())
-                .commit();
     }
 }
